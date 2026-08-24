@@ -1,0 +1,10 @@
+class NullPointerDemo {
+    public static void main(String[] args) {
+        String str = null;
+        try {
+            int length = str.length();
+        } catch (NullPointerException e) {
+            System.out.println("Caught NullPointerException: Cannot invoke method on null reference.");
+        }
+    }
+}

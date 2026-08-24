@@ -1,0 +1,16 @@
+import java.util.Scanner;
+
+class NumberFormatDemo {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter alphanumeric string to parse: ");
+        String inputStr = input.nextLine();
+        try {
+            int num = Integer.parseInt(inputStr);
+            System.out.println("Parsed number: " + num);
+        } catch (NumberFormatException e) {
+            System.out.println("Caught NumberFormatException: Invalid string format for parsing an integer.");
+        }
+        input.close();
+    }
+}

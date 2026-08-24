@@ -1,0 +1,15 @@
+import java.util.Scanner;
+
+class StringIndexOutOfBoundsDemo {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter string: ");
+        String str = input.nextLine();
+        try {
+            char ch = str.charAt(str.length() + 5);
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("Caught StringIndexOutOfBoundsException: Index is out of string range.");
+        }
+        input.close();
+    }
+}

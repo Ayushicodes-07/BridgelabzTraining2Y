@@ -1,0 +1,81 @@
+import java.util.Scanner;
+
+class WordLengthTable {
+    public static int getLength(String text) {
+        int count = 0;
+        try {
+            while (true) {
+                text.charAt(count);
+                count++;
+            }
+        } catch (StringIndexOutOfBoundsException e) {
+            return count;
+        }
+    }
+
+    public static String[] splitWords(String text) {
+        int len = getLength(text);
+        int spaceCount = 0;
+        for (int i = 0; i < len; i++) {
+            if (text.charAt(i) == ' ') {
+                spaceCount++;
+            }
+        }
+
+        int[] spaceIndexes = new int[spaceCount];
+        int idx = 0;
+        for (int i = 0; i < len; i++) {
+            if (text.charAt(i) == ' ') {
+                spaceIndexes[idx++] = i;
+            }
+        }
+
+        String[] words = new String[spaceCount + 1];
+        int start = 0;
+        for (int i = 0; i < spaceCount; i++) {
+            int end = spaceIndexes[i];
+            char[] wordChars = new char[end - start];
+            int k = 0;
+            for (int j = start; j < end; j++) {
+                wordChars[k++] = text.charAt(j);
+            }
+            words[i] = new String(wordChars);
+            start = end + 1;
+        }
+
+        char[] lastWordChars = new char[len - start];
+        int k = 0;
+        for (int j = start; j < len; j++) {
+            lastWordChars[k++] = text.charAt(j);
+        }
+        words[spaceCount] = new String(lastWordChars);
+
+        return words;
+    }
+
+    public static String[][] getWordLengths2D(String[] words) {
+        String[][] wordDetails = new String[words.length][2];
+        for (int i = 0; i < words.length; i++) {
+            wordDetails[i][0] = words[i];
+            wordDetails[i][1] = String.valueOf(getLength(words[i]));
+        }
+        return wordDetails;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter text: ");
+        String text = sc.nextLine();
+
+        String[] words = splitWords(text);
+        String[][] details = getWordLengths2D(words);
+
+        System.out.printf("%-15s %-10s%n", "Word", "Length");
+        System.out.println("-------------------------");
+        for (int i = 0; i < details.length; i++) {
+            int lenVal = Integer.parseInt(details[i][1]);
+            System.out.printf("%-15s %-10d%n", details[i][0], lenVal);
+        }
+        sc.close();
+    }
+}

@@ -1,0 +1,14 @@
+class IllegalArgumentDemo {
+    public static void checkIndices(int start, int end) {
+        if (start > end) {
+            throw new IllegalArgumentException("Start index cannot be greater than end index.");
+        }
+    }
+    public static void main(String[] args) {
+        try {
+            checkIndices(10, 5);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Caught IllegalArgumentException: " + e.getMessage());
+        }
+    }
+}

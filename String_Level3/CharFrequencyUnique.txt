@@ -1,0 +1,47 @@
+import java.util.Scanner;
+
+class CharFrequencyUnique {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter text: ");
+        String text = sc.nextLine();
+        
+        int len = text.length();
+        char[] uniqueChars = new char[len];
+        int uniqueCount = 0;
+        
+        for (int i = 0; i < len; i++) {
+            char ch = text.charAt(i);
+            boolean found = false;
+            for (int j = 0; j < uniqueCount; j++) {
+                if (uniqueChars[j] == ch) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                uniqueChars[uniqueCount++] = ch;
+            }
+        }
+        
+        String[][] matrix = new String[uniqueCount][2];
+        for (int i = 0; i < uniqueCount; i++) {
+            char target = uniqueChars[i];
+            int count = 0;
+            for (int j = 0; j < len; j++) {
+                if (text.charAt(j) == target) {
+                    count++;
+                }
+            }
+            matrix[i][0] = String.valueOf(target);
+            matrix[i][1] = String.valueOf(count);
+        }
+        
+        System.out.printf("%-10s %-10s%n", "Char", "Count");
+        System.out.println("---------------------");
+        for (int i = 0; i < uniqueCount; i++) {
+            System.out.printf("%-10s %-10s%n", matrix[i][0], matrix[i][1]);
+        }
+        sc.close();
+    }
+}

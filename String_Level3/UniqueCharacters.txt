@@ -1,0 +1,53 @@
+import java.util.Scanner;
+
+class UniqueCharacters {
+    public static int getLength(String str) {
+        int count = 0;
+        try {
+            while (true) {
+                str.charAt(count);
+                count++;
+            }
+        } catch (StringIndexOutOfBoundsException e) {
+            return count;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter text: ");
+        String text = sc.nextLine();
+        
+        int len = getLength(text);
+        int maxUnique = 0;
+        for (int i = 0; i < len; i++) {
+            if (text.charAt(i) != ' ') maxUnique++;
+        }
+        
+        char[] uniqueChars = new char[maxUnique];
+        int uniqueCount = 0;
+        
+        for (int i = 0; i < len; i++) {
+            char ch = text.charAt(i);
+            if (ch == ' ') continue;
+            
+            boolean alreadyPresent = false;
+            for (int j = 0; j < uniqueCount; j++) {
+                if (uniqueChars[j] == ch) {
+                    alreadyPresent = true;
+                    break;
+                }
+            }
+            if (!alreadyPresent) {
+                uniqueChars[uniqueCount++] = ch;
+            }
+        }
+        
+        System.out.print("Unique characters: ");
+        for (int i = 0; i < uniqueCount; i++) {
+            System.out.print(uniqueChars[i] + " ");
+        }
+        System.out.println();
+        sc.close();
+    }
+}

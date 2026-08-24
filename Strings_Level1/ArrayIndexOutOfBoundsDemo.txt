@@ -1,0 +1,10 @@
+class ArrayIndexOutOfBoundsDemo {
+    public static void main(String[] args) {
+        int[] arr = new int[5];
+        try {
+            int val = arr[10];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Caught ArrayIndexOutOfBoundsException: Target index position does not exist in array.");
+        }
+    }
+}

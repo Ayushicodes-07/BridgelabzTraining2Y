@@ -1,0 +1,98 @@
+import java.util.Scanner;
+
+class ShortestLongestFinder {
+    public static int getLength(String text) {
+        int count = 0;
+        try {
+            while (true) {
+                text.charAt(count);
+                count++;
+            }
+        } catch (StringIndexOutOfBoundsException e) {
+            return count;
+        }
+    }
+
+    public static String[] splitWords(String text) {
+        int len = getLength(text);
+        int spaceCount = 0;
+        for (int i = 0; i < len; i++) {
+            if (text.charAt(i) == ' ') {
+                spaceCount++;
+            }
+        }
+
+        int[] spaceIndexes = new int[spaceCount];
+        int idx = 0;
+        for (int i = 0; i < len; i++) {
+            if (text.charAt(i) == ' ') {
+                spaceIndexes[idx++] = i;
+            }
+        }
+
+        String[] words = new String[spaceCount + 1];
+        int start = 0;
+        for (int i = 0; i < spaceCount; i++) {
+            int end = spaceIndexes[i];
+            char[] wordChars = new char[end - start];
+            int k = 0;
+            for (int j = start; j < end; j++) {
+                wordChars[k++] = text.charAt(j);
+            }
+            words[i] = new String(wordChars);
+            start = end + 1;
+        }
+
+        char[] lastWordChars = new char[len - start];
+        int k = 0;
+        for (int j = start; j < len; j++) {
+            lastWordChars[k++] = text.charAt(j);
+        }
+        words[spaceCount] = new String(lastWordChars);
+
+        return words;
+    }
+
+    public static String[][] getWordLengths2D(String[] words) {
+        String[][] wordDetails = new String[words.length][2];
+        for (int i = 0; i < words.length; i++) {
+            wordDetails[i][0] = words[i];
+            wordDetails[i][1] = String.valueOf(getLength(words[i]));
+        }
+        return wordDetails;
+    }
+
+    public static int[] findShortestLongestIndices(String[][] details) {
+        int shortestIdx = 0;
+        int longestIdx = 0;
+        int minLen = Integer.parseInt(details[0][1]);
+        int maxLen = Integer.parseInt(details[0][1]);
+
+        for (int i = 1; i < details.length; i++) {
+            int currentLen = Integer.parseInt(details[i][1]);
+            if (currentLen < minLen) {
+                minLen = currentLen;
+                shortestIdx = i;
+            }
+            if (currentLen > maxLen) {
+                maxLen = currentLen;
+                longestIdx = i;
+            }
+        }
+        return new int[]{shortestIdx, longestIdx};
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter text: ");
+        String text = sc.nextLine();
+
+        String[] words = splitWords(text);
+        String[][] details = getWordLengths2D(words);
+        int[] results = findShortestLongestIndices(details);
+
+        System.out.println("Shortest word: " + details[results[0]][0]);
+        System.out.println("Longest word: " + details[results[1]][0]);
+        sc.close();
+    }
+}

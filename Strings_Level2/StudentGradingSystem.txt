@@ -1,0 +1,65 @@
+import java.util.Scanner;
+
+class StudentGradingSystem {
+    public static int[][] generatePCMScores(int studentCount) {
+        int[][] scores = new int[studentCount][3];
+        for (int i = 0; i < studentCount; i++) {
+            scores[i][0] = (int) (Math.random() * 60) + 40;
+            scores[i][1] = (int) (Math.random() * 60) + 40;
+            scores[i][2] = (int) (Math.random() * 60) + 40;
+        }
+        return scores;
+    }
+
+    public static double[][] calculateMetrics(int[][] scores) {
+        double[][] metrics = new double[scores.length][3];
+        for (int i = 0; i < scores.length; i++) {
+            int total = scores[i][0] + scores[i][1] + scores[i][2];
+            double average = total / 3.0;
+            double percentage = (total / 300.0) * 100;
+
+            metrics[i][0] = Math.round(total * 100.0) / 100.0;
+            metrics[i][1] = Math.round(average * 100.0) / 100.0;
+            metrics[i][2] = Math.round(percentage * 100.0) / 100.0;
+        }
+        return metrics;
+    }
+
+    public static String[][] computeGrades(double[][] metrics) {
+        String[][] grades = new String[metrics.length][1];
+        for (int i = 0; i < metrics.length; i++) {
+            double pct = metrics[i][2];
+            if (pct >= 80) grades[i][0] = "A";
+            else if (pct >= 70) grades[i][0] = "B";
+            else if (pct >= 60) grades[i][0] = "C";
+            else if (pct >= 50) grades[i][0] = "D";
+            else if (pct >= 40) grades[i][0] = "E";
+            else grades[i][0] = "R";
+        }
+        return grades;
+    }
+
+    public static void displayScorecard(int[][] scores, double[][] metrics, String[][] grades) {
+        System.out.printf("%-6s %-4s %-4s %-4s %-6s %-8s %-6s %-5s%n", 
+            "ID", "PHY", "CHE", "MAT", "TOTAL", "AVG", "PCT", "GRADE");
+        System.out.println("-------------------------------------------------------");
+        for (int i = 0; i < scores.length; i++) {
+            System.out.printf("S%-5d %-4d %-4d %-4d %-6.0f %-8.2f %-6.2f %-5s%n", 
+                (i + 1), scores[i][0], scores[i][1], scores[i][2], 
+                metrics[i][0], metrics[i][1], metrics[i][2], grades[i][0]);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter total number of students: ");
+        int studentCount = sc.nextInt();
+
+        int[][] scores = generatePCMScores(studentCount);
+        double[][] metrics = calculateMetrics(scores);
+        String[][] grades = computeGrades(metrics);
+
+        displayScorecard(scores, metrics, grades);
+        sc.close();
+    }
+}

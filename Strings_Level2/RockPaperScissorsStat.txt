@@ -1,0 +1,69 @@
+import java.util.Scanner;
+
+class RockPaperScissorsStat {
+    public static String getComputerChoice() {
+        int rand = (int) (Math.random() * 3);
+        if (rand == 0) return "rock";
+        if (rand == 1) return "paper";
+        return "scissors";
+    }
+
+    public static String determineWinner(String user, String computer) {
+        if (user.equals(computer)) {
+            return "tie";
+        }
+        if ((user.equals("rock") && computer.equals("scissors")) ||
+            (user.equals("paper") && computer.equals("rock")) ||
+            (user.equals("scissors") && computer.equals("paper"))) {
+            return "user";
+        }
+        return "computer";
+    }
+
+    public static String[][] calculateStats(int userWins, int compWins, int ties, int totalGames) {
+        String[][] statistics = new String[3][3];
+        
+        statistics[0][0] = "User";
+        statistics[0][1] = String.valueOf((double) userWins / totalGames);
+        statistics[0][2] = String.valueOf(((double) userWins / totalGames) * 100);
+
+        statistics[1][0] = "Computer";
+        statistics[1][1] = String.valueOf((double) compWins / totalGames);
+        statistics[1][2] = String.valueOf(((double) compWins / totalGames) * 100);
+
+        statistics[2][0] = "Tie";
+        statistics[2][1] = String.valueOf((double) ties / totalGames);
+        statistics[2][2] = String.valueOf(((double) ties / totalGames) * 100);
+
+        return statistics;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of games to play: ");
+        int games = sc.nextInt();
+
+        int userWins = 0, compWins = 0, ties = 0;
+
+        for (int i = 0; i < games; i++) {
+            System.out.print("Enter choice (rock, paper, scissors): ");
+            String userChoice = sc.next().toLowerCase();
+            String compChoice = getComputerChoice();
+            
+            String winner = determineWinner(userChoice, compChoice);
+            if (winner.equals("user")) userWins++;
+            else if (winner.equals("computer")) compWins++;
+            else ties++;
+        }
+
+        String[][] stats = calculateStats(userWins, compWins, ties, games);
+
+        System.out.printf("%-12s %-10s %-10s%n", "Player", "Average", "Percentage");
+        System.out.println("-----------------------------------");
+        for (int i = 0; i < 3; i++) {
+            System.out.printf("%-12s %-10.2f %-10.2f%%%n", 
+                stats[i][0], Double.parseDouble(stats[i][1]), Double.parseDouble(stats[i][2]));
+        }
+        sc.close();
+    }
+}

@@ -1,0 +1,25 @@
+import java.util.Scanner;
+
+class SubstringDemo {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter string: ");
+        String str = input.nextLine();
+        System.out.print("Enter start index: ");
+        int start = input.nextInt();
+        System.out.print("Enter end index: ");
+        int end = input.nextInt();
+        if (start < 0 || end > str.length() || start > end) {
+            System.out.println("Invalid indices.");
+            System.exit(0);
+        }
+        char[] subArray = new char[end - start];
+        int index = 0;
+        for (int i = start; i < end; i++) {
+            subArray[index++] = str.charAt(i);
+        }
+        String result = new String(subArray);
+        System.out.println("Substring: " + result);
+        input.close();
+    }
+}

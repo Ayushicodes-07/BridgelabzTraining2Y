@@ -1,0 +1,30 @@
+import java.util.Scanner;
+
+class CharFrequencyNested {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter text: ");
+        String text = sc.nextLine();
+        
+        char[] chars = text.toCharArray();
+        int len = chars.length;
+        
+        System.out.printf("%-10s %-10s%n", "Character", "Frequency");
+        System.out.println("---------------------");
+        for (int i = 0; i < len; i++) {
+            if (chars[i] == '\0') {
+                continue;
+            }
+            char current = chars[i];
+            int count = 1;
+            for (int j = i + 1; j < len; j++) {
+                if (chars[j] == current) {
+                    count++;
+                    chars[j] = '\0';
+                }
+            }
+            System.out.printf("%-10c %-10d%n", current, count);
+        }
+        sc.close();
+    }
+}

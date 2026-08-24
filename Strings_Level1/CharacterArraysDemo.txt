@@ -1,0 +1,19 @@
+import java.util.Scanner;
+
+class CharacterArrayDemo {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter string: ");
+        String str = input.nextLine();
+        char[] chars = new char[str.length()];
+        for (int i = 0; i < str.length(); i++) {
+            chars[i] = str.charAt(i);
+        }
+        System.out.print("Character array elements: ");
+        for (int i = 0; i < chars.length; i++) {
+            System.out.print(chars[i] + " ");
+        }
+        System.out.println();
+        input.close();
+    }
+}
